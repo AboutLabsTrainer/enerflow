@@ -3,6 +3,7 @@ package de.saki.enerflow.adapter.battery.sonnen;
 
 import de.saki.enerflow.core.domain.BatterySnapshot;
 import de.saki.enerflow.core.repository.BatterySnapshotRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
  * @author saki
  */
 @Service
+@Profile("!mock")
 public class SonnenBatterySnapshotService {
 
     private final SonnenBatteryAdapter sonnenBatteryAdapter;

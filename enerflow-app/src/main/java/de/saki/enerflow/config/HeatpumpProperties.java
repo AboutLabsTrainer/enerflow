@@ -24,4 +24,8 @@ public class HeatpumpProperties {
     private int reconnectDelaySeconds;
     private long pollingIntervalMs;
 
+    /** Safety range for hot water setpoint (the device supports 30–65 °C). */
+    private double minSetpointCelsius = 30.0;
+    private double maxSetpointCelsius = 65.0;
+
 }

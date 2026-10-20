@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author saki
  */
 @Component
-@Profile("!test") // scheduler is not needed in tests
+@Profile("!test & !mock") // scheduler is not needed in tests or mock mode
 public class HeatpumpPollingScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(HeatpumpPollingScheduler.class);

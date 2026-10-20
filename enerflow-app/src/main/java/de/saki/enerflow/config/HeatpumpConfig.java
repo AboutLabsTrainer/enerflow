@@ -18,7 +18,7 @@ import java.net.URI;
  * @author saki
  */
 @Configuration
-@Profile("!test") // config is not needed in tests
+@Profile("!test & !mock") // config is not needed in tests or mock mode
 public class HeatpumpConfig {
 
     private static final Logger log = LoggerFactory.getLogger(HeatpumpConfig.class);

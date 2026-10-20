@@ -1,0 +1,62 @@
+# =============================================================================
+# Mock profile — runs EnerFlow without any real hardware.
+# All device adapters are simulated. PostgreSQL is used for persistence.
+#
+# Start PostgreSQL:  docker compose up -d postgres
+# Run the app:       ./mvnw spring-boot:run -Dspring-boot.run.profiles=mock
+# =============================================================================
+
+server:
+  port: 8095
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/enerflow
+    username: enerflow
+    password: ${POSTGRES_PASSWORD:enerflow}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+# Heat pump connection settings — not used in mock mode, but required by
+# HeatpumpProperties / MyUplinkProperties beans.
+heatpump:
+  host: localhost
+  port: 8214
+  password: mock-password
+  reconnect-delay-seconds: 30
+  polling-interval-ms: 60000
+  min-setpoint-celsius: 45.0
+  max-setpoint-celsius: 60.0
+
+sonnen:
+  host: localhost
+  api-token: mock-token
+
+myuplink:
+  base-url: http://localhost
+  client-id: mock-client
+  client-secret: mock-secret
+  device-id: mock-device
+  min-setpoint-celsius: 45.0
+  max-setpoint-celsius: 60.0
+
+enerflow:
+  evaluation-interval-ms: 60000
+  security:
+    default-admin-password: mock-admin-password
+    jwt-secret: mock-secret-key-that-is-long-enough-for-hs256-algorithm
+    jwt-expiration-ms: 3600000
+
+logging:
+  level:
+    de.saki.enerflow: INFO
+    org.java_websocket: WARN

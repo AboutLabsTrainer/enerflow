@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @author saki
  */
 @Component
-@Profile("!test")
+@Profile("!test & !mock")
 public class BatterySnapshotScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(BatterySnapshotScheduler.class);
