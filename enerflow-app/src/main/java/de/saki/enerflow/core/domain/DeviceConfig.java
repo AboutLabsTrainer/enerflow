@@ -10,6 +10,10 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
+ * One key-value row of operator settings: thresholds, setpoints, tank
+ * volume, retention. Strings in the table, numbers in DeviceConfigService.
+ * Changing a row takes effect on the next evaluation cycle. No restart.
+ *
  * Persistent key-value store for runtime-configurable EnerFlow parameters.
  * Values can be updated in the database without restarting the application.
  *

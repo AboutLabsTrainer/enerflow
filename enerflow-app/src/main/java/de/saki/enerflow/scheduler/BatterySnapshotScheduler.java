@@ -1,4 +1,3 @@
-// scheduler/BatterySnapshotScheduler.java
 package de.saki.enerflow.scheduler;
 
 import de.saki.enerflow.adapter.battery.sonnen.SonnenBatterySnapshotService;
@@ -9,6 +8,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
+ * Incoming adapter: time. It calls the sonnen snapshot service on the
+ * evaluation interval and does not decide anything. The profile excludes
+ * mock, because MockSnapshotScheduler writes the same kind of row from
+ * simulated values. Both writers must not run together.
+ *
  * Periodically captures a sonnenBatterie status snapshot and persists it.
  * Runs on the same interval as EnergyManagerScheduler, but is a separate
  * component — persisting data and making automation decisions are two
@@ -17,7 +21,7 @@ import org.springframework.stereotype.Component;
  * @author saki
  */
 @Component
-@Profile("!test & !mock")
+@Profile("!test & !mock") // MockSnapshotScheduler writes these rows while the profile is mock.
 public class BatterySnapshotScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(BatterySnapshotScheduler.class);

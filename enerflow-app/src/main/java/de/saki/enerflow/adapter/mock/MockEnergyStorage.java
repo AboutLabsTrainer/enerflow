@@ -8,6 +8,10 @@ import java.time.Duration;
 import java.time.Instant;
 
 /**
+ * Driven adapter, mock profile only. State of charge climbs from 30 percent
+ * so the surplus rule, which also needs a full battery, becomes true a few
+ * minutes after startup. The core sees EnergyStorage and nothing else.
+ *
  * Mock implementation of {@link EnergyStorage} for local development without a
  * sonnenBatterie. State of charge starts at 30 % and charges by 10 % per
  * minute until it reaches 100 %, simulating a battery that fills up during

@@ -1,4 +1,3 @@
-// core/domain/AppUser.java
 package de.saki.enerflow.core.domain;
 
 import jakarta.persistence.*;
@@ -9,6 +8,11 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
+ * Domain entity for an account. The password column stores a BCrypt hash.
+ * Lockout state lives here so a restart does not forget a locked account.
+ * Controllers must not return this object. Use AppUserResponse, which
+ * drops the hash.
+ *
  * User account for EnerFlow's role-based access control.
  * Passwords are stored as BCrypt hashes; plaintext is never persisted.
  * Account lockout (5 failed attempts -> 15 minutes, per US-04-01) is tracked

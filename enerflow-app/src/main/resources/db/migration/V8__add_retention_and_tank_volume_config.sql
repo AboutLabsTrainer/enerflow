@@ -1,3 +1,5 @@
+-- Applied once, after V7. This file is itself the lesson: V2 already ran, so the
+-- new keys are inserted here instead of being edited into V2.
 -- V8__add_retention_and_tank_volume_config.sql
 -- Adds configuration keys needed for AP3.2: tank volume (for the kWh
 -- calculation in control_log) and snapshot retention period (automatic

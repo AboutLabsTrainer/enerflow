@@ -25,6 +25,8 @@ instead of feeding unused electricity back into the grid.
 - [Architecture](#-architecture)
 - [Tech Stack](#-tech-stack)
 - [Getting Started](#-getting-started)
+- [Running without real hardware (mock profile)](#running-without-real-hardware-mock-profile)
+- [Browse the database (Adminer)](#browse-the-database-adminer)
 - [Testing](#-testing)
 - [User Roles](#-user-roles)
 - [Database Model](#-database-model)
@@ -92,8 +94,9 @@ de.saki.enerflow
 │   ├── heatpump/
 │   │   ├── novelan/     ← NovelanHeatpumpClient (WebSocket, monitoring only)
 │   │   └── myuplink/    ← MyUplinkRestAdapter, MyUplinkTokenService (setpoint control)
-│   └── battery/
-│       └── sonnen/      ← SonnenBatteryAdapter, SonnenBatterySnapshotService
+│   ├── battery/
+│   │   └── sonnen/      ← SonnenBatteryAdapter, SonnenBatterySnapshotService
+│   └── mock/            ← same ports, simulated devices, profile "mock" only
 ├── api/
 │   ├── dashboard/       ← DashboardController, DashboardService
 │   └── config/          ← ElectricityPriceController
@@ -145,9 +148,11 @@ cp .env.example .env   # fill in your local values, see below
 docker compose up --build
 ```
 
-This builds and starts two containers: `enerflow-app` (the Spring Boot application) and
-`enerflow-postgres` (PostgreSQL 16). The app waits for the database healthcheck before starting.
-Once it's up, open **http://localhost:8080/dashboard**.
+This builds and starts three containers: `enerflow-app` (the Spring Boot application),
+`enerflow-postgres` (PostgreSQL 16), and `enerflow-adminer` (a web UI for that database).
+The app waits for the database healthcheck before starting.
+Once it's up, open **http://localhost:8080/dashboard**. To look at the tables, open
+**http://localhost:8081** (see [Browse the database](#browse-the-database-adminer)).
 
 ### Option B — Run the app locally, database in Docker
 
@@ -158,6 +163,78 @@ cd enerflow-app
 cp .env.example .env   # fill in your local values
 ./mvnw spring-boot:run
 ```
+
+### Running without real hardware (mock profile)
+
+The `mock` profile is a lesson in the port-and-adapter split. Spring loads a different
+set of beans. The decision code does not change.
+
+**Swapped** for in-memory simulations:
+
+- Novelan WebSocket reader (`novelanHeatpumpClient`)
+- myUplink REST writer (`myUplinkRestAdapter`)
+- sonnen battery and PV (`SonnenBatteryAdapter`)
+
+**Left in place:**
+
+- PostgreSQL, Flyway, and the snapshot tables
+- Spring Security, users, and JWT
+- `EnergyManagerService`, including the two-cycle flapping check
+
+The hardware polling schedulers are off in this profile. `MockSnapshotScheduler` writes
+the snapshot rows the dashboard reads. Without those rows the status page would be empty
+even though the simulation is running.
+
+Start PostgreSQL and Adminer, then run the app from `enerflow-app`:
+
+```bash
+docker compose up -d postgres adminer
+cd enerflow-app
+./mvnw spring-boot:run -Dspring-boot.run.profiles=mock
+```
+
+The mock configuration listens on **port 8095**, not 8080. Open
+**http://localhost:8095/dashboard**.
+
+Only `POSTGRES_PASSWORD` is required for this path. The heat-pump and sonnen values in
+`.env` are not used. The mock profile supplies its own admin password and JWT secret
+(see `application-mock.yaml`).
+
+What you should see if you leave it running:
+
+- **PV production** follows a 60-minute day that starts at process startup. Output is
+  0 W at the "night" end of the cycle and up to 5.7 kW at the peak.
+- **Battery state of charge** starts at 30 % and climbs about 10 % per minute until it
+  stays at 100 %.
+- **Hot-water temperature** drifts 1 °C toward the setpoint on each read.
+- When charge is at least 90 % and surplus stays above 300 W for two cycles, the
+  setpoint moves from 47 °C to 55 °C (`RAISE` in `control_log`). When the surplus
+  ends, it returns to 47 °C (`RESET`).
+
+### Browse the database (Adminer)
+
+Adminer is a second container on the same Compose network as PostgreSQL. It is not a
+separate project. From inside that network the database host is the service name
+`postgres`, not `localhost`.
+
+```bash
+docker compose up -d postgres adminer
+```
+
+Open **http://localhost:8081** and sign in:
+
+| Field | Value |
+|---|---|
+| System | PostgreSQL |
+| Server | `postgres` (prefilled) |
+| Username | `enerflow` |
+| Password | the `POSTGRES_PASSWORD` from `.env` |
+| Database | `enerflow` |
+
+Useful places to look while the mock profile runs: `enerflow_state` (the on/off flag
+and whether a boost is active), `heatpump_snapshot` and `battery_snapshot` (what the
+dashboard is painting), and `control_log` (each RAISE and RESET, with the kWh estimate).
+`flyway_schema_history` shows which migrations have been applied.
 
 ### Required `.env` values
 

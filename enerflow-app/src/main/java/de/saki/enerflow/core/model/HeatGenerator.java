@@ -1,6 +1,11 @@
 package de.saki.enerflow.core.model;
 
 /**
+ * Port for anything that can heat domestic water and accept a setpoint.
+ * One interface covers reading and writing because both are the heat
+ * pump from the core's point of view. On this plant the two operations
+ * are different adapters, selected by bean name, not by a second port.
+ *
  * Represents a heat-generating device whose target temperature can be controlled.
  * (e.g. heat pump for domestic hot water).
  */

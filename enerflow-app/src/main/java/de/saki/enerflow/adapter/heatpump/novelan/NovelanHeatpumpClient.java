@@ -18,6 +18,11 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * Driven adapter for the Lux_WS WebSocket. It implements HeatGenerator so
+ * the core can read the current setpoint, and it understands the German
+ * content-block names the pump sends. Nothing outside this package should
+ * parse those frames.
+ *
  * WebSocket client for the Novelan heat pump (Helox 5, WRP 2.0).
  * Communicates via the Lux_WS protocol on port 8214
  *

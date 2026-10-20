@@ -6,6 +6,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
+ * Host, port, password, and the legal setpoint range for the Novelan
+ * link. Adapters read these values. The decision service reads thresholds
+ * from DeviceConfigService instead, because those are operator settings,
+ * not connection settings.
+ *
  * Configuration properties for the Novelan heat pump connection.
  * Values are located in application.yaml under the "heatpump" prefix.
  *

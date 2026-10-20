@@ -12,6 +12,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 /**
+ * Signs and checks tokens. The signature is the whole security property:
+ * anyone can read the payload, and only the holder of the secret can
+ * produce a signature this class accepts. The core user service does not
+ * sign tokens. Login, in the web adapter, asks this class to.
+ *
  * Creates and validates JSON Web Tokens (JWTs) for EnerFlow's stateless
  * authentication. Tokens are signed with HMAC-SHA256 (HS256) using a
  * shared secret key configured via {@code enerflow.security.jwt-secret}.

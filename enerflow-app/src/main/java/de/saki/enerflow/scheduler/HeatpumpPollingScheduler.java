@@ -8,13 +8,18 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
+ * Incoming adapter: time. It asks the Novelan client to refresh.
+ * Excluded from test and mock so it does not open a socket when no pump
+ * is there. The mock heat generator does not need a poll. It changes
+ * when it is read.
+ *
  * Scheduler that triggers periodic heat pump data polling.
  * Sends REFRESH every 60 seconds to receive updated sensor data.
  *
  * @author saki
  */
 @Component
-@Profile("!test & !mock") // scheduler is not needed in tests or mock mode
+@Profile("!test & !mock") // No socket in tests or in the mock profile. The mock pump updates when it is read.
 public class HeatpumpPollingScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(HeatpumpPollingScheduler.class);

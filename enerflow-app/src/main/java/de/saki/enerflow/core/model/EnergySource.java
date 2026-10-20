@@ -1,6 +1,11 @@
 package de.saki.enerflow.core.model;
 
 /**
+ * Port for electrical production. The core asks for watts of production
+ * and watts of surplus. It does not ask which inverter answered.
+ * A new PV vendor implements this interface and is injected in place of
+ * the sonnen adapter. This file does not change.
+ *
  * Represents any source of electrical energy (e.g. photovoltaic system).
  * Implementations provide current production and surplus data.
  *

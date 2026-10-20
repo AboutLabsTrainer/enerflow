@@ -6,6 +6,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * Driving adapter for the manager screen. Thresholds and tank size are
+ * use-case settings, so the controller delegates to DeviceConfigService
+ * and does not write SQL. ROLE_USER cannot call it. A homeowner may toggle
+ * automation, not retune the plant.
+ *
  * Exposes runtime-configurable EnerFlow parameters for the Manager UI.
  * Read access requires MANAGER or ADMIN; write access likewise.
  *

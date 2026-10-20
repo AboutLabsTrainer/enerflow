@@ -1,4 +1,3 @@
-// adapter/battery/sonnen/SonnenBatterySnapshotService.java
 package de.saki.enerflow.adapter.battery.sonnen;
 
 import de.saki.enerflow.core.domain.BatterySnapshot;
@@ -9,6 +8,11 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 /**
+ * Driven adapter, persistence side of the sonnen reading. It stores a row
+ * for the dashboard. It does not decide whether to raise the setpoint.
+ * The surplus math is copied instead of calling the adapter a second time,
+ * because each call would be another HTTP request.
+ *
  * Captures a single sonnenBatterie status reading and persists it as a
  * {@link BatterySnapshot}. Mirrors {@code HeatpumpSnapshotService} for the
  * heat pump, but simpler — sonnenBatterie returns all values in one REST
@@ -23,7 +27,7 @@ import java.time.LocalDateTime;
  * @author saki
  */
 @Service
-@Profile("!mock")
+@Profile("!mock") // MockSnapshotScheduler persists the simulated reading instead.
 public class SonnenBatterySnapshotService {
 
     private final SonnenBatteryAdapter sonnenBatteryAdapter;

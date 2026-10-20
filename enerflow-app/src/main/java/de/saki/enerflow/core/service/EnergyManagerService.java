@@ -17,6 +17,11 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 /**
+ * The use case this project exists for. Each cycle it asks the ports
+ * whether the battery is full and the roof has surplus, then raises or
+ * restores the setpoint. It does not know whether the answers came from
+ * sonnen, Novelan, myUplink, or the mock package.
+ *
  * Core decision logic for EnerFlow's PV-surplus automation.
  * Decides whether the hot water setpoint should be elevated based on
  * battery state of charge and PV surplus, with flapping protection
@@ -51,11 +56,16 @@ public class EnergyManagerService {
     private final EnerflowStateRepository stateRepository;
     private final ControlLogRepository controlLogRepository;
 
-    // In-memory flapping-protection counter — intentionally not persisted (see AP2.1 discussion)
+    // How many cycles in a row the surplus rule has already held.
+    // Two cycles (about two minutes) reject a one-off spike. The count is not
+    // stored: a restart must not finish a confirmation that was only half done.
     private int consecutiveConditionMetCount = 0;
 
     public EnergyManagerService(EnergyStorage energyStorage,
                                 EnergySource energySource,
+                                // Two beans, one port. Reading is the Novelan socket and writing
+                                // is myUplink. MockAdapterConfig registers the same names, so this
+                                // constructor stays unchanged when the hardware is simulated.
                                 @Qualifier("novelanHeatpumpClient") HeatGenerator heatGeneratorReader,
                                 @Qualifier("myUplinkRestAdapter") HeatGenerator heatGeneratorWriter,
                                 DeviceConfigService deviceConfigService,

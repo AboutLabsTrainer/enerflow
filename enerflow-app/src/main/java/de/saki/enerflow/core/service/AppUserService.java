@@ -12,6 +12,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
+ * Use case for creating and listing accounts. Hashing happens here, before
+ * the repository, so plaintext never reaches the database. This class
+ * currently returns the web DTO directly. A stricter split would return
+ * AppUser and let the controller map it. The hashing would still stay here.
+ *
  * Application service for ADMIN-level user management (US-04-02).
  * Handles listing existing users and creating new accounts. Passwords are
  * hashed with BCrypt before persisting; plaintext never reaches the repository.

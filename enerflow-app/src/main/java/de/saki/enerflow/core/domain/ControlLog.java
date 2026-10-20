@@ -8,6 +8,10 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
+ * Append-only history of setpoint changes, including the estimated
+ * kilowatt-hours moved into the tank. Rows are not updated. Retention
+ * does not delete them. They are the explanation of why the setpoint moved.
+ *
  * Append-only audit log entry for every setpoint change EnerFlow performs
  * automatically (RAISE/RESET) or a user performs manually (MANUAL).
  * Rows are never updated or deleted after insertion.

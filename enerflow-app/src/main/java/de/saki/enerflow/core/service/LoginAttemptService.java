@@ -1,4 +1,3 @@
-// core/service/LoginAttemptService.java
 package de.saki.enerflow.core.service;
 
 import de.saki.enerflow.core.domain.AppUser;
@@ -11,6 +10,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
+ * Use case for the lockout rule: five failures, then fifteen minutes.
+ * The counters live on AppUser so they survive a restart. The controller
+ * reports success or failure. This class decides what that does to the row.
+ *
  * Tracks failed login attempts per user and applies account lockout after
  * {@value #MAX_FAILED_ATTEMPTS} consecutive failures (US-04-01).
  *

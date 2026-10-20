@@ -1,4 +1,3 @@
-// config/security/JwtAuthenticationFilter.java
 package de.saki.enerflow.config.security;
 
 import de.saki.enerflow.core.service.EnerFlowUserDetailsService;
@@ -19,6 +18,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 /**
+ * Runs once per request, before authorization. A missing Bearer header
+ * is not an error here: public pages such as the dashboard shell have no
+ * token, and the security rules decide whether that is allowed. A present
+ * token is checked and, if valid, stored in the SecurityContext.
+ *
  * Intercepts every incoming HTTP request and checks for a valid JWT in the
  * {@code Authorization: Bearer <token>} header. If a valid token is found,
  * the corresponding user is loaded from the database and set as the currently

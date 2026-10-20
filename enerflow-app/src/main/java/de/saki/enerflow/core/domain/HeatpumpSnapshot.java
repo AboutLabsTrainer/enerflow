@@ -8,6 +8,11 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
+ * One stored reading of the heat pump. Column names follow the German
+ * labels of the Novelan UI because that is the vocabulary of the plant.
+ * The decision service does not read this table for its live setpoint.
+ * It asks the HeatGenerator port.
+ *
  * Represents a single polling snapshot of the heat pump.
  * Stored every 60 seconds (configurable) in the database.
  *

@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
+ * Active only in the mock profile. The decision service asks for two
+ * HeatGenerator beans by name. This class registers the same simulated
+ * pump under both names, so the core does not grow a mock branch.
+ * Bean names are the contract. Renaming one side silently breaks startup.
+ *
  * Spring configuration for the mock profile. Replaces all hardware adapters
  * with simulated implementations so EnerFlow can run locally without a
  * Novelan heat pump, sonnenBatterie, or PV system.

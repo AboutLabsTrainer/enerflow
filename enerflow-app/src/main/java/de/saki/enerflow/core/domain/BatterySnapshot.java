@@ -8,6 +8,11 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
+ * One stored reading of the battery and the PV figures. Written by the
+ * sonnen snapshot service or, in the mock profile, by MockSnapshotScheduler.
+ * The dashboard and the retention job read it. The decision service does
+ * not. It asks the EnergyStorage port for the live value.
+ *
  * Represents a single polling snapshot of the sonnenBatterie.
  * Stored every 60 seconds (configurable) in the database, mirroring
  * {@link HeatpumpSnapshot}.

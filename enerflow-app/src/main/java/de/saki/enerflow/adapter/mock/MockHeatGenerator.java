@@ -6,6 +6,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
+ * Driven adapter, mock profile only. One object plays reader and writer.
+ * Temperature drifts one degree toward the setpoint on each read, so a
+ * RAISE shows up in the dashboard without a pump. Safety limits still come
+ * from HeatpumpProperties, the same bounds the real writer uses.
+ *
  * Mock implementation of {@link HeatGenerator} for local development without a
  * real heat pump. Tracks a simulated hot-water temperature that drifts toward
  * the configured setpoint at 1\u00B0C per call, so the RAISE/RESET automation

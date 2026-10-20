@@ -4,6 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
+ * Driving adapter, HTML half of the dashboard. It returns a template name
+ * and no measurements. The page is a shell. Vanilla JS fills it. Keeping
+ * that split means a status change does not re-render the whole page.
+ *
  * MVC controller serving the Thymeleaf dashboard page.
  * Distinct from {@link DashboardController} which serves the REST JSON endpoint.
  *

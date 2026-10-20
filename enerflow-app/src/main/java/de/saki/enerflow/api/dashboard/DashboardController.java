@@ -6,6 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
+ * Driving adapter, JSON half of the dashboard. The browser polls this
+ * endpoint. The method only asks DashboardService for a snapshot of what
+ * is already stored. It does not query the heat pump.
+ *
  * REST controller exposing dashboard data for the frontend.
  * Polled every 10 seconds by the Vanilla JS client (US-01-01).
  *

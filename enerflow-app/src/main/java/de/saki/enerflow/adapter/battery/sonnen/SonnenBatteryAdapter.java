@@ -11,6 +11,11 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
 /**
+ * Driven adapter. This is the only class that calls the sonnen REST API.
+ * It implements both energy ports because one status payload contains the
+ * battery and the PV figures. EnergyManagerService depends on those ports,
+ * never on this class, which is why the mock profile can replace it.
+ *
  * Infrastructure adapter for the sonnenBatterie local REST API.
  * Implements both {@link EnergyStorage} (battery state) and
  * {@link EnergySource} (PV production and surplus) since both
@@ -19,7 +24,7 @@ import org.springframework.web.client.RestClientException;
  * @author saki
  */
 @Component
-@Profile("!mock")
+@Profile("!mock") // The mock profile binds MockEnergyStorage and MockEnergySource instead.
 public class SonnenBatteryAdapter implements EnergyStorage, EnergySource {
 
     private static final Logger log = LoggerFactory.getLogger(SonnenBatteryAdapter.class);

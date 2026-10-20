@@ -12,6 +12,11 @@ import org.springframework.web.client.RestClient;
 import java.time.Instant;
 
 /**
+ * Adapter detail of the myUplink client. OAuth2 client-credentials tokens
+ * expire, so this class caches one and refreshes it shortly before expiry.
+ * The core never handles tokens. If you add a second cloud vendor, that
+ * vendor gets its own token class. This one is not reused.
+ *
  * Manages OAuth2 Client Credentials token lifecycle for the myUplink REST API.
  * Fetches a new token when needed and caches it until near expiry.
  *

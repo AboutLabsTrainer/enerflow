@@ -12,13 +12,18 @@ import org.springframework.context.annotation.Profile;
 import java.net.URI;
 
 /**
+ * Wires the Novelan WebSocket and connects it at startup. The profile
+ * expression excludes test and mock so a missing pump is not a connection
+ * error. In the mock profile MockAdapterConfig supplies the bean names
+ * this class would have registered.
+ *
  * Spring configuration for the Novelan heat pump WebSocket client.
  * Creates and connects the client on application startup.
  *
  * @author saki
  */
 @Configuration
-@Profile("!test & !mock") // config is not needed in tests or mock mode
+@Profile("!test & !mock") // A missing pump must not open a WebSocket. MockAdapterConfig supplies the beans instead.
 public class HeatpumpConfig {
 
     private static final Logger log = LoggerFactory.getLogger(HeatpumpConfig.class);

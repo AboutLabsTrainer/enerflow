@@ -5,6 +5,10 @@ import de.saki.enerflow.core.domain.EnerflowState;
 import java.time.LocalDateTime;
 
 /**
+ * API view of the singleton automation row. The entity can gain columns
+ * without changing this JSON, as long as fromEntity is updated on purpose.
+ * That explicit mapping is the point of a DTO.
+ *
  * Data transfer object for exposing {@link EnerflowState} via REST.
  * Decouples the API contract from the JPA entity structure.
  *

@@ -3,6 +3,10 @@ package de.saki.enerflow.adapter.battery.sonnen;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
+ * Vendor JSON shape, kept inside the adapter. Jackson binds only the fields
+ * EnerFlow uses. The core never sees this record. The snapshot entity is the
+ * translation that leaves this package.
+ *
  * Maps the JSON response from the sonnenBatterie /api/v2/status endpoint.
  * Only fields relevant for EnerFlow are mapped — the API returns additional
  * fields (voltages, frequencies, etc.) which are not needed here.

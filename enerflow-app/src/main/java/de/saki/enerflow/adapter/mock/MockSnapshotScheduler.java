@@ -15,6 +15,11 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
+ * The dashboard does not call the mock devices. It reads the latest
+ * snapshot rows. Hardware schedulers are off in this profile, so this
+ * class is the only writer of those rows. Without it the status endpoint
+ * stays empty even though the simulation is running.
+ *
  * Persists simulated battery and heat-pump readings while the mock profile is
  * active. The dashboard reads the latest snapshot rows, and the hardware
  * polling schedulers are disabled in this profile, so without this writer the
@@ -49,6 +54,8 @@ public class MockSnapshotScheduler implements ApplicationRunner {
         capture();
     }
 
+    // The hardware polling schedulers are off in this profile. The dashboard
+    // reads snapshot rows, not these mock objects, so this method is the writer.
     @Scheduled(fixedRateString = "${enerflow.evaluation-interval-ms}")
     public void capture() {
         try {

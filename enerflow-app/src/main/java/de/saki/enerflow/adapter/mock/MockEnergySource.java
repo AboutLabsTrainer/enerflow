@@ -8,6 +8,10 @@ import java.time.Duration;
 import java.time.Instant;
 
 /**
+ * Driven adapter, mock profile only. Same port as the sonnen PV reading,
+ * fed by a 60-minute clock that starts when the process starts. The core
+ * cannot tell this from a roof. Do not import this class from core.service.
+ *
  * Mock implementation of {@link EnergySource} for local development without a
  * sonnenBatterie or PV system. Production and surplus follow a simulated
  * 60-minute day/night cycle based on time since application startup, so the

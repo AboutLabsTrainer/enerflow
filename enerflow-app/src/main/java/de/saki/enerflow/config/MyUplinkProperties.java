@@ -6,6 +6,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
+ * Connection settings for the cloud writer: base URL, OAuth client, and
+ * device id. Same role as HeatpumpProperties on the other adapter. The
+ * core does not import this class. Mock mode still creates it, with
+ * dummy values, because the bean is not profile-gated.
+ *
  * Configuration properties for the myUplink Cloud REST API.
  * Values are located in application.yaml under the "myuplink" prefix.
  *

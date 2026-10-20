@@ -8,6 +8,10 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
+ * Append-only history of the electricity price. The current price lives
+ * in ElectricityPriceConfig and is overwritten. This table is why the
+ * old value is still visible afterward.
+ *
  * Append-only audit log entry for every electricity price change.
  * Rows are never updated or deleted after insertion.
  *

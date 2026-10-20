@@ -1,4 +1,3 @@
-// AuthController.java — vollständig ersetzen:
 package de.saki.enerflow.adapter.web.dto;
 
 import de.saki.enerflow.config.security.JwtService;
@@ -17,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * Driving adapter for login. It checks the password once, through Spring's
+ * AuthenticationManager, and returns a JWT. Later requests do not come
+ * back here. The filter in config.security reads the token instead.
+ *
  * Handles authentication requests. On successful login, returns a signed JWT
  * that the client must include in subsequent requests as:
  * {@code Authorization: Bearer <token>}

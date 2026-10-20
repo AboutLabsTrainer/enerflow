@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Driving adapter. HTTP in, use case called, HTTP out. Creating a user
+ * is an admin action, so the method is annotated with the role. The
+ * controller does not hash passwords. That belongs to AppUserService.
+ *
  * REST endpoint for ADMIN-level user management (US-04-02).
  * Allows listing existing accounts and creating new ones. Restricted to ROLE_ADMIN.
  *

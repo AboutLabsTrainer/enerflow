@@ -1,4 +1,3 @@
-// core/service/EnerFlowUserDetailsService.java
 package de.saki.enerflow.core.service;
 
 import de.saki.enerflow.core.domain.AppUser;
@@ -14,6 +13,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
+ * Bridge from AppUser into Spring Security. Spring asks for a username
+ * and receives a UserDetails with the role as a granted authority.
+ * Lockout is expressed by marking that user locked, so Spring refuses
+ * the login without a second check in the controller.
+ *
  * Loads EnerFlow users from the database for Spring Security's authentication
  * process. This is the bridge between our {@link AppUser} entity and Spring
  * Security's internal {@link UserDetails} representation.

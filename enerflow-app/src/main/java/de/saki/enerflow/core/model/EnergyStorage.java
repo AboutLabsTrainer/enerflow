@@ -1,6 +1,10 @@
 package de.saki.enerflow.core.model;
 
 /**
+ * Port for the home battery. The automation needs state of charge and
+ * whether the device is reachable. Power-flow details that the decision
+ * does not use stay out of the interface, even if the vendor sends them.
+ *
  * Represents an electrical energy storage device (e.g. home battery).
  * Implementations provide state-of-charge and power flow data.
  *

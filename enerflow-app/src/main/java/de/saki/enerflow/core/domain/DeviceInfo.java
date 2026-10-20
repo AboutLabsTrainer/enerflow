@@ -1,4 +1,3 @@
-// core/domain/DeviceInfo.java
 package de.saki.enerflow.core.domain;
 
 import jakarta.persistence.Column;
@@ -11,6 +10,10 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
+ * Hardware identity reported by a device, as opposed to DeviceConfig,
+ * which is what the operator typed. Keyed by device type so each device
+ * has one current row, not a history.
+ *
  * Read-only hardware metadata reported by the connected devices themselves
  * (serial number, firmware version, IP address). Distinct from
  * {@link DeviceConfig}, which holds user-configurable parameters.

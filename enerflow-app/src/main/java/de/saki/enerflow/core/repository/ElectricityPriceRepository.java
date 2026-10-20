@@ -5,6 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
+ * Persistence port for the singleton price row. Callers load id 1.
+ * There is no findAll in the API, because a list of prices would be a
+ * different design.
+ *
  * Repository for the electricity price singleton (id = 1).
  *
  * @author saki

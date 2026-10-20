@@ -1,10 +1,19 @@
 /* =============================================================
    EnerFlow Dashboard – Vanilla JS
+
+   The server sends a shell (dashboard.html). This file is the client.
+   It does not compute the automation. It asks the API what was already
+   decided and stored, then paints the page.
+
    Responsibilities:
      1. JWT lifecycle (login modal, logout, token storage)
      2. Poll GET /api/dashboard/status every 10 seconds
      3. Update all DOM elements and SVG animations
      4. Handle EnerFlow toggle switch
+     5. Show manager and admin sections only when the token's role allows them
+
+   The token is kept in sessionStorage under TOKEN_KEY. Each API call
+   sends it as "Authorization: Bearer". There is no server-side session.
    ============================================================= */
 
 'use strict';

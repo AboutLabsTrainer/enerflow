@@ -1,3 +1,9 @@
+-- Flyway applies every file in this directory once, in version order
+-- (V1, then V2, ...). The applied version is stored in flyway_schema_history.
+-- Never edit a migration that has already run. Add the next version instead.
+-- Hibernate is set to ddl-auto: validate, so the Java entities must match
+-- the tables these scripts create. A mismatch stops startup.
+--
 -- Migration V1: Create heatpump_snapshot table
 -- Stores polling snapshots from the Novelan heat pump every 60 seconds
 

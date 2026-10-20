@@ -14,6 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Collects Novelan content blocks until one snapshot is complete, then
+ * saves it. It currently depends on NovelanSnapshotMapper, which points
+ * from the core toward an adapter. That is the exception to the inward
+ * rule in this codebase. A stricter design would hide the mapper behind
+ * a core interface. Read it as a known bend, not as the pattern to copy.
+ *
  * Orchestrates the collection of heat pump data blocks,
  * maps them into a HeatpumpSnapshot and persists it to the database.
  *

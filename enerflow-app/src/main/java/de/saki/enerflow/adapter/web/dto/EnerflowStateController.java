@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 
 /**
+ * Driving adapter for the on/off switch. Toggling automation is a user
+ * action, separate from the scheduler's RAISE and RESET. The controller
+ * updates the singleton row. It does not talk to the heat pump. The next
+ * evaluation cycle applies the new flag.
+ *
  * REST endpoint exposing the EnerFlow automation state.
  * Allows querying the current state and toggling automation on/off.
  *

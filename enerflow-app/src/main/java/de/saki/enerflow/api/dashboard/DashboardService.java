@@ -11,6 +11,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
+ * Read model for the dashboard. It joins the latest snapshots, the
+ * automation flag, and today's control log into one DTO. It lives next
+ * to the API because it exists for that screen. The decision service
+ * must not depend on this class. Automation does not read the dashboard.
+ *
  * Service for assembling the dashboard status DTO.
  * Reads the latest snapshots, the EnerFlow state, and today's control log
  * entries, then aggregates them into a single {@link DashboardStatusDto}.

@@ -1,7 +1,11 @@
-// core/service/HotWaterEnergyCalculator.java
 package de.saki.enerflow.core.service;
 
 /**
+ * Pure function, no Spring, no database. Q equals mass times specific heat
+ * times the temperature change, converted to kilowatt-hours. The control
+ * log stores that estimate. It is thermal energy in the tank, not the
+ * electrical energy the pump drew.
+ *
  * Pure utility for calculating the thermal energy (in kWh) required to heat
  * a given volume of water by a given temperature difference.
  *

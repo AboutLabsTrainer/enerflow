@@ -8,13 +8,18 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
+ * Incoming adapter: time. One method, one call into EnergyManagerService.
+ * The profile is only !test, so the mock profile still evaluates. That
+ * is the demonstration: fake devices, real decision. A failure in one
+ * cycle is logged and swallowed so the next cycle still runs.
+ *
  * Periodically triggers the EnerFlow PV-surplus decision logic.
  * Runs every {@code enerflow.evaluation-interval-ms} milliseconds (default 60s).
  *
  * @author saki
  */
 @Component
-@Profile("!test")
+@Profile("!test") // Still runs in the mock profile: the devices are fake, the decision is not.
 public class EnergyManagerScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(EnergyManagerScheduler.class);

@@ -8,6 +8,11 @@ import tools.jackson.databind.JsonNode;
 
 
 /**
+ * Stays next to the WebSocket client because it knows Novelan block names.
+ * It fills a HeatpumpSnapshot, which is a core type. The mapper is allowed
+ * to depend on the core. The core should not depend on the mapper. See
+ * HeatpumpSnapshotService for the place that rule is currently bent.
+ *
  * Maps Novelan heat pump JSON content blocks to HeatpumpSnapshot domain objects.
  * Each content block (Temperaturen, Anlagenstatus, etc.) is processed separately
  * and merged into a single snapshot.

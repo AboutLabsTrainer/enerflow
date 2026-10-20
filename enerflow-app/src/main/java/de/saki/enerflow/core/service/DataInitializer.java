@@ -14,6 +14,11 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
+ * Seeds the first admin only when the user table is empty. The password
+ * comes from configuration and is hashed before insert. A later startup
+ * finds a row and does nothing, so the initializer cannot reset a
+ * password an operator has changed.
+ *
  * Seeds a default admin user on application startup if no users exist yet.
  * The default password is read from application.yaml
  * ({@code enerflow.security.default-admin-password}) and BCrypt-hashed

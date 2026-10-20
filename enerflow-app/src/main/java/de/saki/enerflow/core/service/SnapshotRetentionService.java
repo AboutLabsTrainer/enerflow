@@ -1,4 +1,3 @@
-// core/service/SnapshotRetentionService.java
 package de.saki.enerflow.core.service;
 
 import de.saki.enerflow.core.repository.BatterySnapshotRepository;
@@ -13,6 +12,10 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
+ * Use case that deletes old snapshot rows once, at startup. control_log
+ * is left alone because it is an audit trail. The retention length is an
+ * operator setting, read from DeviceConfigService, not a constant.
+ *
  * Deletes heatpump_snapshot and battery_snapshot rows older than the
  * configured retention period (default 730 days / ~2 years, per US-05-01).
  * Runs once at application startup (simple solution for AP3.2 — a recurring

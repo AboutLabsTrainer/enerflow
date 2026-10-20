@@ -10,6 +10,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * Driving adapter. The price is configuration for the savings figure on
+ * the dashboard, not a device command. Overwriting the current price
+ * would hide who changed it, so each update also appends a log row.
+ *
  * REST controller for reading and updating the electricity price (US-01-04).
  * Every price change is recorded in electricity_price_change_log.
  *

@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 /**
+ * Use case for operator settings. It turns the string values in
+ * device_config into the numbers the decision logic needs, and it is the
+ * only writer of those keys. Callers, including the web adapter, do not
+ * parse the table themselves.
+ *
  * Provides typed access to runtime-configurable EnerFlow parameters
  * stored in the device_config table.
  *

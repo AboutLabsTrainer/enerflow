@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Persistence port for heat-pump snapshots. Same derived-query style as
+ * the battery repository: latest row, a time window, and a delete for
+ * retention. The dashboard and the retention job are the callers.
+ *
  * Repository for storing and retrieving heat pump snapshots.
  * Spring Data JPA generates all queries automatically.
  */

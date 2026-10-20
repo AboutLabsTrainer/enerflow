@@ -8,6 +8,10 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
+ * The current price, a single row with id 1. Singleton tables are a
+ * pattern in this project: one plant, one row, no list to get wrong.
+ * enerflow_state uses the same idea.
+ *
  * Singleton entity representing the user-configured electricity price.
  * Exactly one row exists in the database at all times (id = 1).
  * Price changes are tracked separately in electricity_price_change_log.

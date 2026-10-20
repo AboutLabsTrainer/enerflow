@@ -1,4 +1,3 @@
-// config/SecurityConfig.java — ersetzt die bestehende Datei vollständig
 package de.saki.enerflow.config;
 
 import de.saki.enerflow.config.security.JwtAuthenticationFilter;
@@ -21,6 +20,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 /**
+ * Defines who may call which HTTP route, and that the application keeps
+ * no HTTP session. Each request must prove itself with a JWT. The filter
+ * that reads the token is inserted here, before Spring's own login filter,
+ * so authorization rules see a user rather than an empty context.
+ *
  * Spring Security configuration for EnerFlow.
  *
  * <p>Chunk 1 (AP3.3): replaces the implicit Spring Boot in-memory user with
@@ -93,6 +97,10 @@ public class SecurityConfig {
                         .authenticationEntryPoint((request, response, authException) ->
                                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
                 )
+                // This filter must run before Spring's username/password filter.
+                // It turns "Authorization: Bearer" into a user in the SecurityContext.
+                // Authorization then sees that user. If this ran later, every
+                // request would look anonymous.
                 .addFilterBefore(jwtAuthenticationFilter,
                         org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
 

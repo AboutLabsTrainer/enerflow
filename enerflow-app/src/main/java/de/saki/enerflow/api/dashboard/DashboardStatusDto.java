@@ -3,6 +3,10 @@ package de.saki.enerflow.api.dashboard;
 import java.time.LocalDateTime;
 
 /**
+ * The JSON document the browser paints every ten seconds. Field names
+ * here are the frontend contract. Snapshot entities can be renamed only
+ * when this record and dashboard.js change with them.
+ *
  * DTO for the dashboard status endpoint (GET /api/dashboard/status).
  * Aggregates data from battery_snapshot, heatpump_snapshot, enerflow_state
  * and today's control_log entries into a single JSON response.

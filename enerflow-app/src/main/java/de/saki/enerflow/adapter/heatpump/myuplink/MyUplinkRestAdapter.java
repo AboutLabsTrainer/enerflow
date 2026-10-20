@@ -12,6 +12,11 @@ import org.springframework.web.client.RestClientException;
 import java.util.Map;
 
 /**
+ * Driven adapter for writing the hot-water setpoint. The core calls
+ * HeatGenerator.setHotWaterSetpoint and does not know this is an HTTPS call
+ * to parameter 5105. Reads stay on the Novelan WebSocket, so this class
+ * leaves the read methods unused on purpose.
+ *
  * Infrastructure adapter that implements {@link HeatGenerator} using the
  * myUplink Cloud REST API. Handles hot water setpoint control for the
  * Novelan Helox 5 heat pump via parameterId 5105.
@@ -22,7 +27,7 @@ import java.util.Map;
  * @author saki
  */
 @Component
-@Profile("!mock")
+@Profile("!mock") // MockAdapterConfig publishes a HeatGenerator under this same bean name.
 public class MyUplinkRestAdapter implements HeatGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(MyUplinkRestAdapter.class);
